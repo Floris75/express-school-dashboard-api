@@ -5,7 +5,7 @@ const {
   getAll,
   getOne,
   add,
-  addPromo
+  addPromo,
 } = require("../controllers/formateurs_controller");
 
 const router = express.Router();
@@ -20,10 +20,9 @@ router.get("/:id", async (request, response) => {
   response.status(OK).json(formateur);
 });
 
-
 router.post("/", async (request, response) => {
   const formateurToAdd = request.body;
-  
+
   const newFormateur = await add(formateurToAdd);
   response.status(CREATED).json(newFormateur);
 });

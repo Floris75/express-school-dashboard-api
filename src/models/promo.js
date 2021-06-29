@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Promo extends Model {
     /**
@@ -11,24 +9,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.Apprenant);
-      this.belongsToMany(models.Formateur, {as: 'promo_formateurs', through: 'formateurs_promos', foreignKey: 'promo_id' });
+      this.belongsToMany(models.Formateur, {
+        as: "promo_formateurs",
+        through: "formateurs_promos",
+        foreignKey: "promo_id",
+      });
     }
-  };
-  Promo.init({
-    id: {
-      allowNull: false,
-      primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+  }
+  Promo.init(
+    {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
+      name: {
+        allowNull: false,
+        type: DataTypes.UUID,
+        onDelete: "CASCADE",
+      },
     },
-    name: {
-      allowNull: false,
-      type: DataTypes.UUID,
-      onDelete: "CASCADE",
-    },
-  }, {
-    sequelize,
-    modelName: 'Promo',
-  });
+    {
+      sequelize,
+      modelName: "Promo",
+    }
+  );
   return Promo;
 };

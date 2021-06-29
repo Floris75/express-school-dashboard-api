@@ -2,11 +2,7 @@ const express = require("express");
 
 const { OK, CREATED } = require("../helpers/status_codes");
 
-const {
-  getAll,
-  getOne,
-  add,
-} = require("../controllers/promos_controller");
+const { getAll, getOne, add } = require("../controllers/promos_controller");
 
 const router = express.Router();
 

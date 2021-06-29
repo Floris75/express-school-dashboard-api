@@ -13,63 +13,72 @@ const formateurController = {
   getOne: async (id) => {
     const formateur = await Formateur.findOne({
       where: {
-        id
+        id,
       },
       attributes: { exclude: ["createdAt", "updatedAt"] },
-      include: 'formateur_promos'
+      include: "formateur_promos",
     });
     if (!formateur) {
-      throw new NotFoundError("Ressource introuvable", "Ce Formateur n'existe pas");
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Ce Formateur n'existe pas"
+      );
     }
 
     return formateur;
   },
   add: async (data) => {
-    const {firstname, lastname, promo_id} = data;
+    const { firstname, lastname, promo_id } = data;
 
     const formateur = await Formateur.findOne({
       where: {
         firstname,
-        lastname
+        lastname,
       },
-      attributes: {exclude: ['PromoId']}
+      attributes: { exclude: ["PromoId"] },
     });
 
     if (formateur) {
-      throw new BadRequestError("Ressource existante", "Le Formateur existe déjà");
+      throw new BadRequestError(
+        "Ressource existante",
+        "Le Formateur existe déjà"
+      );
     }
 
     const newFormateur = await Formateur.create(data);
-    
-    if (promo_id)
-      newFormateur.addFormateur_promos(promo_id);
+
+    if (promo_id) newFormateur.addFormateur_promos(promo_id);
 
     return newFormateur;
   },
   addPromo: async (id, promo_id) => {
-
     const formateur = await Formateur.findOne({
       where: {
-        id
+        id,
       },
-      attributes: { exclude: ['PromoId'] }
+      attributes: { exclude: ["PromoId"] },
     });
 
     if (!formateur) {
-      throw new BadRequestError("Ressource inexistante", "Le Formateur n'existe pas");
+      throw new BadRequestError(
+        "Ressource inexistante",
+        "Le Formateur n'existe pas"
+      );
     }
 
     const promo = await Promo.findOne({
       where: {
-        id: promo_id
+        id: promo_id,
       },
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
 
     if (!promo) {
-      throw new NotFoundError("Ressource introuvable", "Cette promo n'existe pas");
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Cette promo n'existe pas"
+      );
     }
-
 
     formateur.addFormateur_promos(promo_id);
 

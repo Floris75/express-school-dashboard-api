@@ -1,6 +1,5 @@
-const {
-  Model
-} = require('sequelize');
+const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Salle extends Model {
     /**
@@ -11,23 +10,26 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // this.belongsToMany(models.Reservation, {as: 'Salle', through: 'Reservations'});
     }
-  };
-  Salle.init({
-    id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+  }
+  Salle.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+      },
+      name: {
+        type: DataTypes.STRING,
+      },
+      capacity: {
+        type: DataTypes.INTEGER,
+      },
     },
-    name: {
-      type: DataTypes.STRING
-    },
-    capacity: {
-      type: DataTypes.INTEGER
-    },
-  }, {
-    sequelize,
-    modelName: 'Salle',
-  });
+    {
+      sequelize,
+      modelName: "Salle",
+    }
+  );
   return Salle;
 };

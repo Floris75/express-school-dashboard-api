@@ -1,12 +1,12 @@
 module.exports = {
-  "development": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": "dashboardsimplon",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "seederStorage": "sequelize"
-  }
+  development: {
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: "dashboard",
+    host: "localhost",
+    dialect: "mysql",
+    seederStorage: "sequelize",
+  },
   // "test": {
   //   "username": "root",
   //   "password": null,
@@ -21,4 +21,4 @@ module.exports = {
   //   "host": "127.0.0.1",
   //   "dialect": "mysql"
   // }
-}
+};

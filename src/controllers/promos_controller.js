@@ -1,7 +1,6 @@
 const { Promo } = require("../models");
 const { BadRequestError, NotFoundError } = require("../helpers/errors");
 
-
 const promosController = {
   getAll: async () => {
     const Promos = await Promo.findAll({
@@ -14,13 +13,16 @@ const promosController = {
   getOne: async (id) => {
     const promo = await Promo.findOne({
       where: {
-        id
+        id,
       },
       attributes: { exclude: ["createdAt", "updatedAt"] },
-      include: ['promo_formateurs', 'Apprenants']
+      include: ["promo_formateurs", "Apprenants"],
     });
     if (!promo) {
-      throw new NotFoundError("Ressource introuvable", "Cette promo n'existe pas");
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Cette promo n'existe pas"
+      );
     }
 
     return promo;
@@ -30,11 +32,14 @@ const promosController = {
 
     const promo = await Promo.findOne({
       where: {
-        name
-      }
+        name,
+      },
     });
     if (promo) {
-      throw new BadRequestError("Ressource existante", "Cette promo existe déjà");
+      throw new BadRequestError(
+        "Ressource existante",
+        "Cette promo existe déjà"
+      );
     }
 
     const newPromo = await Promo.create(data);

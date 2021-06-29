@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
   const apprenants = await getAll();
-  response.status(OK).json(apprenants)
+  response.status(OK).json(apprenants);
 });
 
 router.post("/", async (request, response) => {

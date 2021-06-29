@@ -5,7 +5,7 @@ const apprenantsController = {
   getAll: async () => {
     const apprenants = await Apprenant.findAll({
       order: [["firstname", "ASC"]],
-      attributes: {exclude: ["createdAt", "updatedAt"]},
+      attributes: { exclude: ["createdAt", "updatedAt"] },
       raw: true,
     });
     return apprenants;
@@ -14,45 +14,56 @@ const apprenantsController = {
   getOne: async (id) => {
     const apprenant = await Apprenant.findOne({
       where: {
-        id
+        id,
       },
-      attributes: {exclude: ["createdAt", "updatedAt", "PromoId", "promo_id"]},
-      include: 'promo'
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "PromoId", "promo_id"],
+      },
+      include: "promo",
     });
     if (!apprenant) {
-      throw new NotFoundError("Ressource introuvable", "Ce Apprenant n'existe pas");
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Ce Apprenant n'existe pas"
+      );
     }
 
     return apprenant;
   },
 
   add: async (data) => {
-    const {firstname, lastname, promo_id} = data;
-    
+    const { firstname, lastname, promo_id } = data;
+
     const apprenant = await Apprenant.findOne({
       where: {
-        firstname, lastname
-      }
+        firstname,
+        lastname,
+      },
     });
 
     if (apprenant) {
-      throw new BadRequestError("Ressource existante", "Ce Apprenant existe déjà");
+      throw new BadRequestError(
+        "Ressource existante",
+        "Ce Apprenant existe déjà"
+      );
     }
 
-    const newApprenant = await Apprenant.create({firstname, lastname});
-    
+    const newApprenant = await Apprenant.create({ firstname, lastname });
+
     if (promo_id) {
       const promo = await Promo.findOne({
         where: {
-          id: promo_id
+          id: promo_id,
         },
-        attributes: { exclude: ["createdAt", "updatedAt"] }
+        attributes: { exclude: ["createdAt", "updatedAt"] },
       });
-  
+
       if (!promo) {
-        throw new NotFoundError("Ressource introuvable", "Cette promo n'existe pas");
-      }
-      else {
+        throw new NotFoundError(
+          "Ressource introuvable",
+          "Cette promo n'existe pas"
+        );
+      } else {
         newApprenant.setPromo(promo_id);
         promo.addApprenant(newApprenant);
       }
@@ -66,17 +77,20 @@ const apprenantsController = {
       where: { id },
     });
     if (!apprenantFound) {
-      throw new NotFoundError("Ressource introuvable", "Ce Apprenant n'existe pas");
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Ce Apprenant n'existe pas"
+      );
     }
 
     await apprenantFound.update(data);
 
     const apprenant = await Apprenant.findOne({
       where: {
-        id
+        id,
       },
-      attributes: {exclude: ["createdAt", "updatedAt"]},
-    }); 
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
 
     return apprenant;
   },
@@ -86,7 +100,10 @@ const apprenantsController = {
       where: { id },
     });
     if (!apprenantFound) {
-      throw new NotFoundError("Ressource introuvable", "Ce Apprenant n'existe pas");
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Ce Apprenant n'existe pas"
+      );
     }
 
     await Apprenant.destroy({
